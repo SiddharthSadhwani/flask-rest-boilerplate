@@ -1,59 +1,116 @@
-
 {
-    "openapi": "3.0.0",
-    "info": {
-      "description": "Python-Flask-Rest-Boilerplate",
-      "version": "1.0.0",
-      "title": "Python-Flask-Rest-Boilerplate",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Python-Flask-Rest-Boilerplate",
+    "version": "1.0.0",
+    "title": "Python-Flask-Rest-Boilerplate",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "health",
+      "description": "health check endpoint"
+    }
+  ],
+  "paths": {
+    "/Complete_Tree": {
+      "get": {
+        "tags": [
+          "Health Check"
+        ],
+        "summary": "Returns health of api ",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/health"
+            }
+          }
+        }
       }
     },
-    "servers": [
-      {
-        "url": "/"
+    "/Sub_Tree/{name}": {
+      "parameters": [
+        {
+          "snode": "name",
+          "in": "path",
+          "required": true,
+          "description": "start node",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "sub tree request"
+        ],
+        "summary": "Get book request with given ID",
+        "parameters": [
+          {
+            "in": "path",
+            "snode": "name",
+            "required": true,
+            "description": "Book Request id",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/health"
+            }
+          },
+          "400": {
+            "description": "Failed. Misunderstood Request."
+          },
+          "404": {
+            "description": "Failed. Book request not found."
+          }
+        }
       }
-    ],
-    "tags": [
-      {
-        "name": "health",
-        "description": "health check endpoint"
-      }
-    ],
-    "paths": {
-      "/health": {
-        "get": {
-          "tags": [
-            "Health Check"
-          ],
-          "summary": "Returns health of api ",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/components/schemas/health"
+    }
+  },
+      "components": {
+        "schemas": {
+          "id":   {
+            "properties": {
+              "snode": {
+                "type": "string"
+              }
+            }
+          },
+          "bookRequest": {
+            "type": "object",
+            "properties": {
+              "snode": {
+                "type": "string",
+                "format": "string"
+              }
+            }
+          },
+          "health": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "format": "string"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "number"
               }
             }
           }
         }
       }
-    },
-    "components": {
-      "schemas": {
-        "health": {
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "string",
-              "format": "string"
-            },
-            "timestamp": {
-              "type": "string",
-              "format": "number"
-            }
-          }
-        }
-      }
     }
-  }
